@@ -1,0 +1,6 @@
+{
+  "appId": "com.puente.ingles",
+  "appName": "Puente Inglés",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}

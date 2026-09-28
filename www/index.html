@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E4E6E">
+<title>Puente · Inglés intermedio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EAF1F4; --surface:#FFFFFF; --surface-2:#DCE8EE; --ink:#10263A; --muted:#4F6576;
+  --primary:#1E4E6E; --primary-ink:#FFFFFF; --accent:#F2B134; --accent-ink:#2B1D00;
+  --ok:#2F8A55; --ok-bg:#DDF2E5; --bad:#C23B4E; --bad-bg:#F9DFE3; --line:#C9D8E0;
+  --radius-lg:22px; --radius-sm:10px;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1C27; --surface:#162A38; --surface-2:#1E3747; --ink:#E6EFF4; --muted:#9DB2C0;
+    --primary:#6FB3DA; --primary-ink:#06202F; --accent:#F2B134; --accent-ink:#2B1D00;
+    --ok:#6BCB92; --ok-bg:#163A28; --bad:#F08593; --bad-bg:#43202A; --line:#2A4556;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1C27; --surface:#162A38; --surface-2:#1E3747; --ink:#E6EFF4; --muted:#9DB2C0;
+  --primary:#6FB3DA; --primary-ink:#06202F; --accent:#F2B134; --accent-ink:#2B1D00;
+  --ok:#6BCB92; --ok-bg:#163A28; --bad:#F08593; --bad-bg:#43202A; --line:#2A4556;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+img{max-width:100%}
+main{max-width:640px;margin:0 auto;padding:20px 18px 120px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0}
+h1{font-size:2rem;font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.45rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.1rem;font-weight:700}
+p{margin:.4em 0}
+.muted{color:var(--muted)}
+.stack>*+*{margin-top:14px}
+.panel{background:var(--surface);border-radius:var(--radius-lg);padding:18px;border:1px solid var(--line)}
+.row{display:flex;gap:10px;align-items:center}
+.between{justify-content:space-between}
+.wrap{flex-wrap:wrap}
+.btn{border:0;border-radius:999px;padding:12px 20px;font-weight:700;background:var(--primary);color:var(--primary-ink);min-height:46px}
+.btn.alt{background:var(--surface-2);color:var(--ink)}
+.btn.accent{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--primary);padding:10px 12px}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.block{width:100%}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--surface-2);font-size:.85rem;color:var(--muted)}
+.list-btn{display:flex;width:100%;text-align:left;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-height:64px}
+.list-btn+.list-btn{margin-top:10px}
+.list-btn .grow{flex:1}
+.list-btn small{display:block;color:var(--muted);font-size:.88rem}
+.back{background:none;border:0;color:var(--primary);font-weight:700;padding:6px 0;margin-bottom:8px}
+
+/* Header / hero */
+.hero{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;margin-bottom:22px}
+.hero h1 span{display:block;font-size:1rem;font-family:var(--body);font-weight:400;color:var(--muted);letter-spacing:0}
+.ring{width:108px;height:108px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .val{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;font-size:1.4rem;line-height:1}
+.ring .val small{display:block;font-family:var(--body);font-weight:400;font-size:.72rem;color:var(--muted);margin-top:3px}
+.streak{display:flex;gap:6px;margin-top:10px}
+.streak i{width:26px;height:26px;border-radius:8px;background:var(--surface-2);display:grid;place-items:center;font-style:normal;font-size:.72rem;color:var(--muted)}
+.streak i.on{background:var(--accent);color:var(--accent-ink);font-weight:700}
+
+/* Flashcard */
+.card-wrap{perspective:1200px;margin:10px 0 16px}
+.flash{position:relative;height:300px;transition:transform .45s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d;cursor:pointer}
+.flash.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius-lg);padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:1px solid var(--line)}
+.face.front{background:var(--primary);color:var(--primary-ink);border:0}
+.face.front .word{font-family:var(--display);font-size:2.3rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.face.back{background:var(--surface);transform:rotateY(180deg)}
+.face.back .mean{font-family:var(--display);font-size:1.5rem;font-weight:700}
+.face .ex{margin-top:14px;font-style:italic;max-width:32ch}
+.face .note{margin-top:10px;font-size:.9rem;color:var(--muted)}
+.face.front .hint{position:absolute;bottom:16px;font-size:.85rem;opacity:.8}
+.speak{border:0;background:rgba(255,255,255,.18);color:inherit;border-radius:999px;padding:8px 14px;margin-top:14px;font-weight:700}
+.face.back .speak{background:var(--surface-2)}
+.progress{height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.progress b{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+
+/* Exercises */
+.q{font-size:1.15rem;font-weight:700;margin:6px 0 14px}
+.opt{display:block;width:100%;text-align:left;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);margin-bottom:10px;min-height:52px}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.field{width:100%;padding:13px 15px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font-size:1.05rem}
+.field:focus{border-color:var(--primary);outline:none}
+textarea.field{min-height:130px;resize:vertical}
+.feedback{border-radius:14px;padding:14px 16px;margin:12px 0}
+.feedback.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.feedback.no{background:var(--bad-bg);border-left:5px solid var(--bad)}
+.explain{background:var(--surface);border-radius:var(--radius-lg);padding:18px;border:1px solid var(--line)}
+.explain h3{margin-top:14px}
+.explain ul{padding-left:20px;margin:6px 0}
+.en{font-weight:700;color:var(--primary)}
+.diff span{padding:1px 4px;border-radius:5px;margin-right:2px;display:inline-block}
+.diff .g{background:var(--ok-bg);color:var(--ok)}
+.diff .r{background:var(--bad-bg);color:var(--bad);text-decoration:line-through}
+.diff .m{background:var(--surface-2);color:var(--muted);border:1px dashed var(--muted)}
+
+/* Chat */
+.chat{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.msg{max-width:85%;padding:11px 15px;border-radius:18px;white-space:pre-wrap;word-wrap:break-word}
+.msg.bot{background:var(--surface);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:6px}
+.msg.me{background:var(--primary);color:var(--primary-ink);align-self:flex-end;border-bottom-right-radius:6px}
+.fix{align-self:flex-end;max-width:85%;font-size:.9rem;background:var(--accent);color:var(--accent-ink);padding:9px 13px;border-radius:14px}
+.fix b{display:block}
+.composer{display:flex;gap:8px;position:sticky;bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--bg);padding:8px 0}
+.composer .field{flex:1}
+.out{white-space:pre-wrap}
+
+/* Bottom nav */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;z-index:10}
+nav.tabs .inner{display:flex;max-width:640px;width:100%;justify-content:space-around}
+nav.tabs button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.74rem;color:var(--muted);padding:6px 4px;min-width:58px;border-radius:12px}
+nav.tabs button svg{width:24px;height:24px}
+nav.tabs button[aria-current="page"]{color:var(--primary);font-weight:700}
+nav.tabs button[aria-current="page"] svg{stroke-width:2.4}
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:700;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+<nav class="tabs" aria-label="Secciones"><div class="inner" id="tabs"></div></nav>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* =========================================================
+   PUENTE — app de inglés B1→B2
+   Arquitectura escalable:
+   1) CONTENT: todo el contenido (vocabulario, gramática, dictados, escenarios).
+      Para añadir material nuevo, solo agregas objetos aquí.
+   2) MODULES: cada sección de la app es un objeto {id,label,icon,render}.
+      Para añadir una sección nueva, agregas un módulo a la lista.
+   3) Store: progreso guardado en el dispositivo.
+   ========================================================= */
+
+const CONTENT = {
+  decks: [
+    { id:"phrasal", name:"Phrasal verbs esenciales", cards:[
+      {en:"give up", es:"rendirse / dejar de (un hábito)", ex:"I gave up smoking two years ago."},
+      {en:"look forward to", es:"tener ganas de / esperar con ilusión", ex:"I'm looking forward to seeing you.", note:"Va seguido de -ing."},
+      {en:"come up with", es:"idear / ocurrírsele", ex:"She came up with a great idea."},
+      {en:"get along with", es:"llevarse bien con", ex:"I get along with my coworkers."},
+      {en:"put off", es:"posponer", ex:"Don't put off your homework."},
+      {en:"run out of", es:"quedarse sin", ex:"We ran out of milk."},
+      {en:"figure out", es:"averiguar / entender", ex:"I can't figure out this problem."},
+      {en:"turn down", es:"rechazar (una oferta) / bajar (volumen)", ex:"He turned down the job offer."},
+      {en:"bring up", es:"sacar (un tema) / criar", ex:"Don't bring up politics at dinner."},
+      {en:"carry on", es:"continuar", ex:"Carry on, I'm listening."}
+    ]},
+    { id:"false", name:"Falsos amigos", cards:[
+      {en:"actually", es:"en realidad", ex:"Actually, I'm not from Spain.", note:"«Actualmente» es currently."},
+      {en:"embarrassed", es:"avergonzado", ex:"I was so embarrassed when I fell.", note:"«Embarazada» es pregnant."},
+      {en:"library", es:"biblioteca", ex:"I study at the library.", note:"«Librería» es bookstore."},
+      {en:"sensible", es:"sensato", ex:"That's a sensible decision.", note:"«Sensible» en español es sensitive."},
+      {en:"realize", es:"darse cuenta", ex:"I realized I was wrong.", note:"«Realizar» es to carry out."},
+      {en:"assist", es:"ayudar", ex:"Can I assist you?", note:"«Asistir a» es to attend."},
+      {en:"eventually", es:"finalmente / al final", ex:"Eventually, we found the hotel.", note:"«Eventualmente» es possibly."},
+      {en:"pretend", es:"fingir", ex:"He pretended to be asleep.", note:"«Pretender» es to intend / to try."},
+      {en:"carpet", es:"alfombra", ex:"The carpet is new.", note:"«Carpeta» es folder."},
+      {en:"exit", es:"salida", ex:"Where is the exit?", note:"«Éxito» es success."}
+    ]},
+    { id:"work", name:"Inglés para el trabajo", cards:[
+      {en:"deadline", es:"fecha límite", ex:"The deadline is next Friday."},
+      {en:"to hire", es:"contratar", ex:"They hired three new engineers."},
+      {en:"a raise", es:"un aumento de sueldo", ex:"I asked my boss for a raise."},
+      {en:"to apply for", es:"postularse / solicitar", ex:"I applied for a job in marketing."},
+      {en:"skills", es:"habilidades", ex:"Communication skills are important."},
+      {en:"feedback", es:"comentarios / retroalimentación", ex:"Thanks for your feedback."},
+      {en:"to be in charge of", es:"estar a cargo de", ex:"She's in charge of the sales team."},
+      {en:"to reschedule", es:"reprogramar", ex:"Can we reschedule the meeting?"}
+    ]},
+    { id:"idioms", name:"Expresiones cotidianas", cards:[
+      {en:"it's up to you", es:"tú decides", ex:"Pizza or sushi? It's up to you."},
+      {en:"a piece of cake", es:"pan comido / muy fácil", ex:"The exam was a piece of cake."},
+      {en:"to be on the same page", es:"estar de acuerdo / en sintonía", ex:"Let's make sure we're on the same page."},
+      {en:"to break the ice", es:"romper el hielo", ex:"He told a joke to break the ice."},
+      {en:"in the long run", es:"a largo plazo", ex:"Saving money pays off in the long run."},
+      {en:"no wonder", es:"con razón / no me extraña", ex:"No wonder you're tired, you worked all night."},
+      {en:"it's worth it", es:"vale la pena", ex:"The trip was expensive, but it was worth it."},
+      {en:"to keep in touch", es:"mantenerse en contacto", ex:"Let's keep in touch!"}
+    ]},
+    { id:"travel", name:"Viajes", cards:[
+      {en:"boarding pass", es:"tarjeta de embarque", ex:"Please show your boarding pass."},
+      {en:"delay", es:"retraso", ex:"There's a two-hour delay."},
+      {en:"luggage", es:"equipaje", ex:"My luggage got lost.", note:"Es incontable: no se dice «luggages»."},
+      {en:"layover", es:"escala", ex:"We have a layover in Miami."},
+      {en:"round trip", es:"ida y vuelta", ex:"A round-trip ticket, please."},
+      {en:"to check in", es:"registrarse (hotel / vuelo)", ex:"We checked in at 3 p.m."},
+      {en:"to book", es:"reservar", ex:"I booked a table for two."},
+      {en:"sightseeing", es:"hacer turismo", ex:"We went sightseeing in London."}
+    ]}
+  ],
+
+  lessons: [
+    { id:"pp-ps", title:"Present perfect vs past simple", level:"B1",
+      explain:`<p>Es el error más común de los hispanohablantes, porque en español usamos «he hecho» y «hice» de forma diferente.</p>
+<h3>Past simple → tiempo terminado</h3>
+<p>Cuando dices <b>cuándo</b> pasó (yesterday, in 2019, last week, ago).</p>
+<ul><li><span class="en">I visited Rome in 2019.</span></li><li><span class="en">She called me two hours ago.</span></li></ul>
+<h3>Present perfect → sin momento concreto o que sigue hasta hoy</h3>
+<p>Experiencias de vida, resultados actuales, o con <b>for / since / already / yet / ever / never</b>.</p>
+<ul><li><span class="en">I have visited Rome twice.</span></li><li><span class="en">I've lived here since 2020.</span></li><li><span class="en">Have you ever eaten sushi?</span></li></ul>
+<p class="muted">Truco: si puedes poner una fecha, casi siempre es past simple.</p>`,
+      ex:[
+        {q:"I ___ to Paris last summer.", options:["have gone","went","have been going"], answer:1, why:"«Last summer» es un momento terminado → past simple."},
+        {q:"She ___ here since 2018.", options:["worked","has worked","works"], answer:1, why:"«Since» indica que empezó en el pasado y continúa → present perfect."},
+        {type:"fill", q:"___ you ever ___ (try) Mexican food?", answer:["have tried","have you ever tried"], hint:"Escribe las dos palabras que faltan, p. ej. «have ...».", why:"«Ever» + experiencia de vida → Have you ever tried...?"},
+        {q:"I ___ my keys. I can't open the door!", options:["lost","have lost","was losing"], answer:1, why:"Resultado que importa ahora (no puedo abrir) → present perfect."},
+        {q:"When ___ you ___ your job?", options:["have / started","did / start","do / start"], answer:1, why:"«When» pregunta por un momento concreto → past simple."}
+      ]},
+    { id:"cond2", title:"Second conditional", level:"B1",
+      explain:`<p>Situaciones <b>imaginarias o poco probables</b> en el presente o futuro.</p>
+<h3>Estructura</h3>
+<p><b>If + past simple, would + verbo</b></p>
+<ul><li><span class="en">If I had more time, I would learn Japanese.</span></li><li><span class="en">If she lived closer, we'd see each other more.</span></li></ul>
+<p>Con <b>to be</b> se usa <b>were</b> para todas las personas: <span class="en">If I were you, I'd accept the offer.</span></p>
+<p class="muted">Nunca pongas «would» después de «if».</p>`,
+      ex:[
+        {q:"If I ___ rich, I would travel the world.", options:["am","would be","were"], answer:2, why:"Condicional irreal → were."},
+        {type:"fill", q:"If he studied more, he ___ (pass) the exam.", answer:["would pass","'d pass"], why:"Resultado imaginario → would + verbo."},
+        {q:"What would you do if you ___ the lottery?", options:["won","win","would win"], answer:0, why:"Después de «if» va past simple."},
+        {q:"If I were you, I ___ call her.", options:["will","would","am"], answer:1, why:"Consejo con «If I were you» → would."}
+      ]},
+    { id:"cond3", title:"Third conditional", level:"B2",
+      explain:`<p>Para hablar de un <b>pasado que no ocurrió</b> y sus consecuencias imaginarias. Sirve mucho para lamentos.</p>
+<h3>Estructura</h3>
+<p><b>If + had + participio, would have + participio</b></p>
+<ul><li><span class="en">If I had studied, I would have passed.</span> (No estudié y suspendí.)</li><li><span class="en">If we'd left earlier, we wouldn't have missed the train.</span></li></ul>
+<p class="muted">Ojo: 'd puede ser «had» (después de if) o «would» (en el resultado).</p>`,
+      ex:[
+        {q:"If you ___ me, I would have helped you.", options:["told","had told","would tell"], answer:1, why:"Pasado irreal → had + participio."},
+        {type:"fill", q:"If she had taken the job, she ___ (move) to Canada.", answer:["would have moved","'d have moved"], why:"Resultado → would have + participio."},
+        {q:"We ___ the match if we had trained harder.", options:["would win","would have won","had won"], answer:1, why:"Resultado en el pasado → would have won."},
+        {q:"If it hadn't rained, we ___ to the beach.", options:["would have gone","would go","went"], answer:0, why:"Tercer condicional → would have gone."}
+      ]},
+    { id:"passive", title:"Voz pasiva", level:"B1",
+      explain:`<p>Se usa cuando importa más <b>la acción o el objeto</b> que quién la hace.</p>
+<h3>Estructura</h3>
+<p><b>be (en el tiempo que toque) + participio</b></p>
+<ul><li>Presente: <span class="en">English is spoken here.</span></li><li>Pasado: <span class="en">The bridge was built in 1990.</span></li><li>Present perfect: <span class="en">The package has been sent.</span></li><li>Futuro: <span class="en">The results will be announced tomorrow.</span></li></ul>
+<p>Quién lo hizo va con <b>by</b>: <span class="en">The book was written by Borges.</span></p>`,
+      ex:[
+        {q:"This house ___ in 1920.", options:["built","was built","has built"], answer:1, why:"Pasado pasivo → was + participio."},
+        {type:"fill", q:"The emails ___ (send) every morning.", answer:["are sent"], why:"Presente pasivo, sujeto plural → are sent."},
+        {q:"The winner ___ next week.", options:["will announce","will be announced","is announcing"], answer:1, why:"Futuro pasivo → will be + participio."},
+        {q:"My car ___ . I need a taxi.", options:["has been stolen","has stolen","stole"], answer:0, why:"Resultado actual en pasiva → has been stolen."}
+      ]},
+    { id:"reported", title:"Estilo indirecto (reported speech)", level:"B2",
+      explain:`<p>Para contar lo que otra persona dijo. Normalmente el verbo <b>retrocede un tiempo</b>.</p>
+<ul><li>"I <b>am</b> tired." → She said she <b>was</b> tired.</li><li>"I <b>will</b> call you." → He said he <b>would</b> call me.</li><li>"I <b>have</b> finished." → She said she <b>had</b> finished.</li><li>"I <b>can</b> swim." → He said he <b>could</b> swim.</li></ul>
+<h3>Say vs tell</h3>
+<p><b>Tell</b> necesita a quién: <span class="en">She told me...</span> · <b>Say</b> no: <span class="en">She said (that)...</span></p>`,
+      ex:[
+        {q:"\"I'm hungry.\" → He said he ___ hungry.", options:["is","was","has been"], answer:1, why:"am/is retrocede a was."},
+        {q:"She ___ me she was leaving.", options:["said","told","says"], answer:1, why:"Con objeto (me) se usa told."},
+        {type:"fill", q:"\"I will help you.\" → She said she ___ help me.", answer:["would"], why:"will → would."},
+        {q:"\"We have finished.\" → They said they ___ finished.", options:["have","had","has"], answer:1, why:"have → had."}
+      ]},
+    { id:"usedto", title:"Used to / be used to / get used to", level:"B2",
+      explain:`<p>Tres estructuras que se parecen pero significan cosas distintas.</p>
+<h3>used to + verbo</h3><p>Hábitos del pasado que ya no ocurren (= «solía»). <span class="en">I used to play football.</span></p>
+<h3>be used to + -ing / sustantivo</h3><p>Estar acostumbrado. <span class="en">I'm used to working at night.</span></p>
+<h3>get used to + -ing / sustantivo</h3><p>Acostumbrarse (proceso). <span class="en">You'll get used to the cold.</span></p>`,
+      ex:[
+        {q:"When I was a child, I ___ climb trees.", options:["used to","am used to","got used to"], answer:0, why:"Hábito pasado → used to + verbo."},
+        {q:"I'm used to ___ early.", options:["wake up","waking up","woke up"], answer:1, why:"be used to + -ing."},
+        {type:"fill", q:"It took me months to get used to ___ (drive) on the left.", answer:["driving"], why:"get used to + -ing."},
+        {q:"She ___ living alone now; it's not a problem.", options:["used to","is used to","use to"], answer:1, why:"Está acostumbrada ahora → is used to."}
+      ]}
+  ],
+
+  dictations: [
+    {en:"I've been working here for three years.", lvl:"B1"},
+    {en:"Could you tell me where the station is?", lvl:"B1"},
+    {en:"If I had known, I would have called you.", lvl:"B2"},
+    {en:"We're running out of time, so let's hurry.", lvl:"B1"},
+    {en:"She told me she was looking forward to the trip.", lvl:"B2"},
+    {en:"The meeting has been postponed until next week.", lvl:"B2"},
+    {en:"I'm not used to getting up so early.", lvl:"B1"},
+    {en:"Would you mind opening the window?", lvl:"B1"},
+    {en:"He came up with a solution nobody had thought of.", lvl:"B2"},
+    {en:"It's worth visiting the old town at night.", lvl:"B1"},
+    {en:"I wish I had studied harder at school.", lvl:"B2"},
+    {en:"Our flight was delayed because of the storm.", lvl:"B1"}
+  ],
+
+  scenarios: [
+    {id:"free", name:"Charla libre", desc:"Habla de lo que quieras", role:"a friendly English conversation partner who asks about the learner's life, hobbies and plans", opener:"Hi! How's your day going so far?"},
+    {id:"job", name:"Entrevista de trabajo", desc:"Practica preguntas típicas", role:"a job interviewer at an international company, asking one typical interview question at a time", opener:"Good morning, thanks for coming in. Could you start by telling me a little about yourself?"},
+    {id:"restaurant", name:"En el restaurante", desc:"Pide comida y resuelve problemas", role:"a waiter at a busy restaurant in New York", opener:"Hi there, welcome! Can I get you something to drink while you look at the menu?"},
+    {id:"airport", name:"En el aeropuerto", desc:"Facturación y control", role:"an airline check-in agent at an airport", opener:"Good afternoon. Where are you flying to today?"},
+    {id:"hotel", name:"Queja en el hotel", desc:"Explica un problema con educación", role:"a hotel receptionist dealing with a guest who has a complaint about their room", opener:"Good evening, front desk. How can I help you?"}
+  ]
+};
+
+/* ---------------- Store (progreso local) ---------------- */
+const STORE_KEY = "puente-ingles-v1";
+const DEFAULTS = { xp:{}, cards:{}, lessons:{}, dict:{}, settings:{goal:50, rate:0.9} };
+let S = load();
+function load(){
+  try{ const raw = localStorage.getItem(STORE_KEY); if(raw){ const d = JSON.parse(raw); return {...structuredClone(DEFAULTS), ...d, settings:{...DEFAULTS.settings, ...(d.settings||{})}}; } }catch(e){}
+  return structuredClone(DEFAULTS);
+}
+function save(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(S)); }catch(e){} }
+const today = () => { const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+function dayKey(offset){ const d=new Date(); d.setDate(d.getDate()-offset); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function addXP(n){ const k=today(); S.xp[k]=(S.xp[k]||0)+n; save(); }
+function streak(){ let n=0; let i=(S.xp[today()]?0:1); while(S.xp[dayKey(i)]){ n++; i++; } return n; }
+
+/* ---------------- Utilidades ---------------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = s => s.toLowerCase().replace(/[’`]/g,"'").replace(/[^a-z0-9' ]/g," ").replace(/\s+/g," ").trim();
+function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("show"); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove("show"),1600); }
+function shuffle(a){ a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+
+let voice=null;
+function pickVoice(){ if(!("speechSynthesis" in window)) return; const vs=speechSynthesis.getVoices(); voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs.find(v=>/^en/i.test(v.lang)) || null; }
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function speak(text, rate){
+  const TTS = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.TextToSpeech;
+  if(TTS){ TTS.stop().catch(()=>{}).finally(()=>TTS.speak({text, lang:"en-US", rate:rate||S.settings.rate}).catch(()=>toast("Instala la voz en inglés en los ajustes de Android"))); return; }
+  if(!("speechSynthesis" in window)){ toast("Tu navegador no puede leer en voz alta"); return; }
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text); u.lang="en-US"; if(voice) u.voice=voice; u.rate=rate||S.settings.rate; speechSynthesis.speak(u);
+}
+
+/* ---------------- Repetición espaciada (Leitner) ---------------- */
+const INTERVALS = [0, 1, 3, 7, 16, 35]; // días por caja
+const cardId = (deck, c) => deck + ":" + c.en;
+function deckStats(deck){
+  const now=Date.now(); let due=0, learned=0, fresh=0;
+  deck.cards.forEach(c=>{ const st=S.cards[cardId(deck.id,c)]; if(!st) fresh++; else { if(st.due<=now) due++; if(st.box>=3) learned++; } });
+  return {due, learned, fresh, total:deck.cards.length};
+}
+function totalDue(){ return CONTENT.decks.reduce((n,d)=>{const s=deckStats(d); return n+s.due;},0); }
+function grade(id, knew){
+  const st=S.cards[id]||{box:0,due:0};
+  st.box = knew ? Math.min(st.box+1, INTERVALS.length-1) : 0;
+  st.due = Date.now() + INTERVALS[st.box]*864e5;
+  S.cards[id]=st; save();
+}
+
+/* ---------------- Iconos ---------------- */
+const I = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const ICONS = {
+  home: I('<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>'),
+  cards: I('<rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/>'),
+  book: I('<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/>'),
+  ear: I('<path d="M6 9a6 6 0 1 1 12 0c0 3-2 4-3 5.5S14 18 12.5 19.5 8 21 7 19"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0"/>'),
+  chat: I('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>')
+};
+
+/* =========================================================
+   MÓDULOS — añade secciones nuevas aquí
+   ========================================================= */
+const MODULES = [
+  { id:"hoy", label:"Hoy", icon:ICONS.home, render:renderHome },
+  { id:"vocab", label:"Vocabulario", icon:ICONS.cards, render:renderVocab },
+  { id:"grammar", label:"Gramática", icon:ICONS.book, render:renderGrammar },
+  { id:"listen", label:"Escuchar", icon:ICONS.ear, render:renderListen },
+  { id:"tutor", label:"Tutor", icon:ICONS.chat, render:renderTutor }
+];
+let current="hoy";
+function go(id, ...args){
+  current=id;
+  const mod=MODULES.find(m=>m.id===id);
+  document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-current", b.dataset.id===id?"page":"false"));
+  const app=$("#app"); app.innerHTML=""; mod.render(app, ...args);
+  window.scrollTo(0,0);
+}
+function buildTabs(){
+  $("#tabs").innerHTML = MODULES.map(m=>`<button data-id="${m.id}" aria-current="false">${m.icon}<span>${m.label}</span></button>`).join("");
+  $("#tabs").onclick = e => { const b=e.target.closest("button"); if(b) go(b.dataset.id); };
+}
+
+/* ---------------- Hoy ---------------- */
+function renderHome(app){
+  const xp=S.xp[today()]||0, goal=S.settings.goal, pct=Math.min(1,xp/goal);
+  const C=2*Math.PI*46;
+  const days=["D","L","M","X","J","V","S"];
+  const strip=[6,5,4,3,2,1,0].map(o=>{ const d=new Date(); d.setDate(d.getDate()-o); return `<i class="${S.xp[dayKey(o)]?"on":""}" title="${dayKey(o)}">${days[d.getDay()]}</i>`; }).join("");
+  const due=totalDue();
+  const nextLesson=CONTENT.lessons.find(l=>!S.lessons[l.id]) || CONTENT.lessons[0];
+  const h=new Date().getHours(); const greet = h<12?"Good morning":h<19?"Good afternoon":"Good evening";
+  app.innerHTML = `
+  <section class="hero">
+    <div>
+      <h1>${greet}!<span>Racha: ${streak()} ${streak()===1?"día":"días"}</span></h1>
+      <div class="streak" aria-label="Últimos 7 días">${strip}</div>
+    </div>
+    <div class="ring" role="img" aria-label="${xp} de ${goal} puntos hoy">
+      <svg width="108" height="108"><circle cx="54" cy="54" r="46" stroke="var(--surface-2)" stroke-width="10" fill="none"/>
+      <circle cx="54" cy="54" r="46" stroke="var(--accent)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}"/></svg>
+      <div class="val"><div>${xp}<small>de ${goal} pts</small></div></div>
+    </div>
+  </section>
+  <h2 style="margin-bottom:12px">Tu plan de hoy</h2>
+  <button class="list-btn" data-go="vocab">${ICONS.cards}<span class="grow"><b>Repasar tarjetas</b><small>${due>0? due+" pendientes de repaso" : "Aprende palabras nuevas"}</small></span></button>
+  <button class="list-btn" data-go="grammar" data-arg="${nextLesson.id}">${ICONS.book}<span class="grow"><b>${esc(nextLesson.title)}</b><small>Lección de gramática · ${nextLesson.level}</small></span></button>
+  <button class="list-btn" data-go="listen">${ICONS.ear}<span class="grow"><b>Un dictado</b><small>Entrena el oído escribiendo lo que escuchas</small></span></button>
+  <button class="list-btn" data-go="tutor">${ICONS.chat}<span class="grow"><b>Conversa 5 minutos</b><small>El tutor te corrige mientras hablas</small></span></button>
+  <details class="panel" style="margin-top:22px">
+    <summary style="cursor:pointer;font-weight:700">Ajustes</summary>
+    <div class="stack" style="margin-top:12px">
+      <label>Meta diaria de puntos
+        <select class="field" id="goalSel">${[30,50,80,120].map(g=>`<option ${g===goal?"selected":""}>${g}</option>`).join("")}</select></label>
+      <label>Velocidad de la voz
+        <select class="field" id="rateSel">${[["0.7","Lenta"],["0.9","Normal"],["1.05","Rápida"]].map(([v,t])=>`<option value="${v}" ${+v===S.settings.rate?"selected":""}>${t}</option>`).join("")}</select></label>
+      <button class="btn alt" id="resetBtn">Borrar todo mi progreso</button>
+    </div>
+  </details>`;
+  app.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go, b.dataset.arg));
+  $("#goalSel").onchange=e=>{S.settings.goal=+e.target.value; save(); go("hoy");};
+  $("#rateSel").onchange=e=>{S.settings.rate=+e.target.value; save(); speak("This is the new speed.");};
+  $("#resetBtn").onclick=()=>{ if(confirm("¿Seguro? Se borrarán tu racha, tarjetas y lecciones.")){ S=structuredClone(DEFAULTS); save(); go("hoy"); toast("Progreso borrado"); } };
+}
+
+/* ---------------- Vocabulario ---------------- */
+function renderVocab(app){
+  app.innerHTML = `<h1>Vocabulario</h1><p class="muted">Las tarjetas que fallas vuelven pronto; las que sabes, cada vez más tarde.</p><div id="decks" style="margin-top:16px"></div>`;
+  $("#decks").innerHTML = CONTENT.decks.map(d=>{ const s=deckStats(d); return `<button class="list-btn" data-deck="${d.id}"><span class="grow"><b>${esc(d.name)}</b><small>${s.learned}/${s.total} dominadas${s.due?` · ${s.due} para repasar`:""}${s.fresh?` · ${s.fresh} nuevas`:""}</small></span><span class="chip">${s.total}</span></button>`; }).join("");
+  app.querySelectorAll("[data-deck]").forEach(b=>b.onclick=()=>studyDeck(app, CONTENT.decks.find(d=>d.id===b.dataset.deck)));
+}
+function studyDeck(app, deck){
+  const now=Date.now();
+  const due=deck.cards.filter(c=>{const st=S.cards[cardId(deck.id,c)]; return st && st.due<=now;});
+  const fresh=deck.cards.filter(c=>!S.cards[cardId(deck.id,c)]).slice(0,6);
+  let queue=shuffle([...due, ...fresh]);
+  if(!queue.length) queue=shuffle(deck.cards).slice(0,8); // práctica extra
+  const total=queue.length; let done=0, knewCount=0;
+  function show(){
+    if(!queue.length){
+      app.innerHTML=`<button class="back">‹ Vocabulario</button><div class="panel stack" style="text-align:center"><h2>¡Sesión completa!</h2><p>Sabías ${knewCount} de ${total} tarjetas.</p><button class="btn block" id="again">Otra ronda</button></div>`;
+      app.querySelector(".back").onclick=()=>go("vocab"); $("#again").onclick=()=>studyDeck(app,deck); return;
+    }
+    const c=queue[0];
+    app.innerHTML=`<button class="back">‹ Vocabulario</button>
+    <div class="row between"><h3>${esc(deck.name)}</h3><span class="muted">${done}/${total}</span></div>
+    <div class="progress" style="margin-top:8px"><b style="width:${done/total*100}%"></b></div>
+    <div class="card-wrap"><div class="flash" id="flash" tabindex="0" role="button" aria-label="Voltear tarjeta">
+      <div class="face front"><div class="word">${esc(c.en)}</div><button class="speak" data-say="${esc(c.en)}">▶ Escuchar</button><div class="hint">Toca para ver el significado</div></div>
+      <div class="face back"><div class="mean">${esc(c.es)}</div><div class="ex">“${esc(c.ex)}”</div>${c.note?`<div class="note">${esc(c.note)}</div>`:""}<button class="speak" data-say="${esc(c.ex)}">▶ Escuchar ejemplo</button></div>
+    </div></div>
+    <div class="row" id="gradeRow" style="visibility:hidden"><button class="btn alt block" id="no">Otra vez</button><button class="btn block" id="yes">Lo sabía</button></div>`;
+    app.querySelector(".back").onclick=()=>go("vocab");
+    const f=$("#flash");
+    const flip=()=>{ f.classList.toggle("flipped"); $("#gradeRow").style.visibility="visible"; };
+    f.onclick=e=>{ if(e.target.closest(".speak")) return; flip(); };
+    f.onkeydown=e=>{ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); flip(); } };
+    app.querySelectorAll(".speak").forEach(b=>b.onclick=e=>{ e.stopPropagation(); speak(b.dataset.say); });
+    $("#yes").onclick=()=>{ grade(cardId(deck.id,c),true); addXP(5); knewCount++; done++; queue.shift(); show(); };
+    $("#no").onclick=()=>{ grade(cardId(deck.id,c),false); addXP(2); queue.push(queue.shift()); show(); };
+  }
+  show();
+}
+
+/* ---------------- Gramática ---------------- */
+function renderGrammar(app, lessonId){
+  if(lessonId){ const l=CONTENT.lessons.find(x=>x.id===lessonId); if(l) return openLesson(app,l); }
+  app.innerHTML=`<h1>Gramática</h1><p class="muted">Explicación corta en español y ejercicios para fijarla.</p><div id="ls" style="margin-top:16px"></div>`;
+  $("#ls").innerHTML=CONTENT.lessons.map(l=>{ const r=S.lessons[l.id]; return `<button class="list-btn" data-l="${l.id}"><span class="grow"><b>${esc(l.title)}</b><small>${r?`Mejor resultado: ${r.best}/${l.ex.length}`:"Sin empezar"}</small></span><span class="chip">${l.level}</span></button>`; }).join("");
+  app.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>openLesson(app, CONTENT.lessons.find(l=>l.id===b.dataset.l)));
+}
+function openLesson(app, l){
+  app.innerHTML=`<button class="back">‹ Gramática</button><h2 style="margin-bottom:12px">${esc(l.title)}</h2><div class="explain">${l.explain}</div><button class="btn block" style="margin-top:16px" id="startEx">Practicar (${l.ex.length} ejercicios)</button>`;
+  app.querySelector(".back").onclick=()=>go("grammar");
+  $("#startEx").onclick=()=>runExercises(app,l);
+}
+function runExercises(app, l){
+  let i=0, score=0;
+  function show(){
+    if(i>=l.ex.length){
+      const prev=S.lessons[l.id]?.best||0; S.lessons[l.id]={best:Math.max(prev,score)}; save();
+      app.innerHTML=`<button class="back">‹ Gramática</button><div class="panel stack" style="text-align:center"><h2>${score===l.ex.length?"¡Perfecto!":"Lección terminada"}</h2><p>${score} de ${l.ex.length} correctas.</p><button class="btn block" id="retry">Repetir ejercicios</button><button class="btn alt block" id="review">Volver a la explicación</button></div>`;
+      app.querySelector(".back").onclick=()=>go("grammar"); $("#retry").onclick=()=>runExercises(app,l); $("#review").onclick=()=>openLesson(app,l); return;
+    }
+    const e=l.ex[i];
+    app.innerHTML=`<button class="back">‹ ${esc(l.title)}</button><div class="progress"><b style="width:${i/l.ex.length*100}%"></b></div>
+      <p class="q">${esc(e.q)}</p><div id="ans"></div><div id="fb"></div><button class="btn block" id="next" style="display:none">Siguiente</button>`;
+    app.querySelector(".back").onclick=()=>openLesson(app,l);
+    const fb=$("#fb"), next=$("#next");
+    const finish=(ok, correctText)=>{
+      if(ok){ score++; addXP(10); }
+      fb.innerHTML=`<div class="feedback ${ok?"ok":"no"}"><b>${ok?"¡Correcto!":"Respuesta correcta: "+esc(correctText)}</b><br>${esc(e.why)}</div>`;
+      next.style.display="block"; next.focus(); next.onclick=()=>{i++; show();};
+    };
+    if(e.type==="fill"){
+      $("#ans").innerHTML=`<input class="field" id="inp" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Escribe tu respuesta">${e.hint?`<p class="muted" style="font-size:.9rem">${esc(e.hint)}</p>`:""}<button class="btn block" id="check" style="margin-top:10px">Comprobar</button>`;
+      const inp=$("#inp"); inp.focus();
+      const check=()=>{ if(!inp.value.trim()) return; const v=norm(inp.value); const ok=e.answer.some(a=>norm(a)===v); inp.disabled=true; $("#check").remove(); finish(ok, e.answer[0]); };
+      $("#check").onclick=check; inp.onkeydown=ev=>{ if(ev.key==="Enter") check(); };
+    } else {
+      $("#ans").innerHTML=e.options.map((o,k)=>`<button class="opt" data-k="${k}">${esc(o)}</button>`).join("");
+      app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+        const k=+b.dataset.k; app.querySelectorAll(".opt").forEach(x=>{x.disabled=true; if(+x.dataset.k===e.answer) x.classList.add("right");});
+        if(k!==e.answer) b.classList.add("wrong");
+        finish(k===e.answer, e.options[e.answer]);
+      });
+    }
+  }
+  show();
+}
+
+/* ---------------- Escuchar (dictado) ---------------- */
+function renderListen(app){
+  const list=CONTENT.dictations; const doneN=Object.keys(S.dict).length;
+  let idx = list.findIndex((_,k)=>!S.dict[k]); if(idx<0) idx=Math.floor(Math.random()*list.length);
+  function show(){
+    const d=list[idx];
+    app.innerHTML=`<h1>Escuchar</h1><p class="muted">Escucha la frase y escríbela. Puedes repetirla las veces que quieras.</p>
+    <div class="panel stack" style="margin-top:16px">
+      <div class="row between"><span class="chip">Frase ${idx+1} de ${list.length} · ${d.lvl}</span><span class="muted" style="font-size:.9rem">${doneN} completadas</span></div>
+      <div class="row wrap"><button class="btn accent" id="play">▶ Reproducir</button><button class="btn alt" id="slow">Más lento</button></div>
+      <textarea class="field" id="inp" style="min-height:90px" autocapitalize="off" spellcheck="false" placeholder="Escribe lo que escuchas…"></textarea>
+      <button class="btn block" id="check">Comprobar</button>
+      <div id="res"></div>
+    </div>`;
+    $("#play").onclick=()=>speak(d.en); $("#slow").onclick=()=>speak(d.en,0.65);
+    $("#check").onclick=()=>{
+      const v=$("#inp").value; if(!v.trim()) { toast("Escribe algo primero"); return; }
+      const {html, pct}=compare(d.en, v);
+      if(!S.dict[idx]||S.dict[idx]<pct){ S.dict[idx]=pct; save(); }
+      addXP(pct===100?10:Math.round(pct/20));
+      $("#res").innerHTML=`<div class="feedback ${pct>=85?"ok":"no"}"><b>${pct}% de palabras correctas</b><div class="diff" style="margin-top:8px">${html}</div><p style="margin-top:10px"><span class="en">${esc(d.en)}</span></p></div><button class="btn block" id="nx">Siguiente frase</button>`;
+      $("#nx").onclick=()=>{ idx=(idx+1)%list.length; show(); };
+    };
+    setTimeout(()=>speak(d.en),300);
+  }
+  show();
+}
+// Compara palabra por palabra (LCS) y marca aciertos, errores y faltantes
+function compare(target, input){
+  const a=norm(target).split(" "), b=norm(input).split(" ").filter(Boolean);
+  const dp=Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+  for(let i=a.length-1;i>=0;i--) for(let j=b.length-1;j>=0;j--) dp[i][j]= a[i]===b[j]? dp[i+1][j+1]+1 : Math.max(dp[i+1][j],dp[i][j+1]);
+  let i=0,j=0,out=[];
+  while(i<a.length && j<b.length){
+    if(a[i]===b[j]){ out.push(`<span class="g">${esc(a[i])}</span>`); i++; j++; }
+    else if(dp[i+1][j]>=dp[i][j+1]){ out.push(`<span class="m" title="Faltó">${esc(a[i])}</span>`); i++; }
+    else { out.push(`<span class="r" title="Sobra o es incorrecta">${esc(b[j])}</span>`); j++; }
+  }
+  while(i<a.length){ out.push(`<span class="m">${esc(a[i++])}</span>`); }
+  while(j<b.length){ out.push(`<span class="r">${esc(b[j++])}</span>`); }
+  return {html:out.join(" "), pct:Math.round(dp[0][0]/a.length*100)};
+}
+
+/* ---------------- Tutor con IA ---------------- */
+const KEY_STORE="puente-api-key";
+const getKey=()=>{ try{ return localStorage.getItem(KEY_STORE)||""; }catch(e){ return ""; } };
+function apiSample(key){
+  const call = async (prompt, opts={}) => {
+    let res;
+    try{
+      res = await fetch("https://api.anthropic.com/v1/messages", { method:"POST",
+        headers:{ "content-type":"application/json", "x-api-key":key, "anthropic-version":"2023-06-01", "anthropic-dangerous-direct-browser-access":"true" },
+        body: JSON.stringify({ model:"claude-haiku-4-5-20251001", max_tokens:1200, messages:[{role:"user", content:prompt}] }) });
+    }catch(e){ throw {code:"offline"}; }
+    if(res.status===401) throw {code:"bad_key"};
+    if(res.status===429) throw {code:"rate_limited"};
+    if(!res.ok) throw {code:"api_error"};
+    const data = await res.json();
+    const text = (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
+    if(opts.onText) opts.onText({text, delta:text});
+    return {text, truncated:data.stop_reason==="max_tokens"};
+  };
+  call.json = async (prompt, opts) => { const {text} = await call(prompt, opts); const m = text.replace(/```json|```/g,"").match(/\{[\s\S]*\}/); if(!m) throw {code:"api_error"}; return JSON.parse(m[0]); };
+  return call;
+}
+const inClaude = !!(window.claude && window.claude.use);
+let samplePromise = inClaude ? window.claude.use("sample").catch(()=>null) : Promise.resolve(getKey()? apiSample(getKey()) : null);
+let chat=null; // {scenario, turns:[{role,content}]}
+const errCopy = c => ({not_granted:"Necesitas permitir el uso de Claude para hablar con el tutor.", rate_limited:"Demasiados mensajes seguidos. Espera un momento y vuelve a intentarlo.", bad_key:"La clave de API no es válida. Revísala en la pestaña Tutor.", offline:"Sin conexión a internet. El tutor necesita conexión."}[c] || "No se pudo contactar con el tutor. Inténtalo de nuevo.");
+
+async function renderTutor(app){
+  app.innerHTML=`<h1>Tutor</h1><p class="muted">Conversa en inglés. Si cometes un error, verás la corrección en amarillo.</p><div id="tbody" style="margin-top:16px"><p class="muted">Conectando…</p></div>`;
+  const sample=await samplePromise;
+  if(current!=="tutor") return;
+  const body=$("#tbody");
+  if(!sample && inClaude){ body.innerHTML=`<div class="panel"><h3>El tutor no está disponible aquí</h3><p class="muted">Mientras tanto, practica con tarjetas, gramática y dictados.</p></div>`; return; }
+  if(!sample){
+    body.innerHTML=`<div class="panel stack"><h3>Activa el tutor</h3>
+      <p class="muted">El tutor usa la IA de Claude. Para usarlo en esta app necesitas una clave de API de Anthropic (se crea en console.anthropic.com y se paga según el uso; cada conversación cuesta céntimos). La clave se guarda solo en tu teléfono.</p>
+      <input class="field" id="keyInp" placeholder="sk-ant-..." autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button class="btn block" id="keyBtn">Guardar clave</button></div>`;
+    $("#keyBtn").onclick=()=>{ const k=$("#keyInp").value.trim(); if(!k.startsWith("sk-ant-")){ toast("La clave debe empezar por sk-ant-"); return; } try{ localStorage.setItem(KEY_STORE,k); }catch(e){} samplePromise=Promise.resolve(apiSample(k)); toast("Clave guardada"); go("tutor"); };
+    return;
+  }
+  const keyNote = (!inClaude) ? `<p style="margin-top:20px"><button class="btn ghost" id="forget">Quitar mi clave de API</button></p>` : "";
+  if(chat) return openChat(app, sample);
+  body.innerHTML = `<h2 style="margin-bottom:10px">Elige una situación</h2>` +
+    CONTENT.scenarios.map(s=>`<button class="list-btn" data-s="${s.id}"><span class="grow"><b>${esc(s.name)}</b><small>${esc(s.desc)}</small></span></button>`).join("") +
+    `<h2 style="margin:24px 0 10px">Corregir un texto</h2><div class="panel stack"><p class="muted">Pega un email, mensaje o redacción y te explico los errores en español.</p><textarea class="field" id="wtxt" placeholder="Write something in English…"></textarea><button class="btn block" id="wbtn">Corregir texto</button><div id="wout" class="out"></div></div>` + keyNote;
+  const fb2=$("#forget"); if(fb2) fb2.onclick=()=>{ try{ localStorage.removeItem(KEY_STORE); }catch(e){} samplePromise=Promise.resolve(null); chat=null; toast("Clave eliminada"); go("tutor"); };
+  body.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{ const s=CONTENT.scenarios.find(x=>x.id===b.dataset.s); chat={scenario:s, items:[{role:"assistant",content:s.opener}]}; openChat(app,sample); });
+  $("#wbtn").onclick=async()=>{
+    const t=$("#wtxt").value.trim(); if(!t){ toast("Escribe un texto primero"); return; }
+    const btn=$("#wbtn"), out=$("#wout"); btn.disabled=true; out.textContent="Revisando…";
+    try{
+      const {text}=await sample(`You are an English teacher for a Spanish-speaking learner at B1-B2 level. Correct the text below.
+Reply in plain text (no markdown symbols like ** or #), in this exact order:
+1) "Versión corregida:" followed by the corrected text in English.
+2) "Errores:" followed by a short numbered list; for each error show the original fragment → the correction, and a one-sentence explanation IN SPANISH.
+3) "Consejo:" one short tip in Spanish to sound more natural.
+If there are no errors, say so in Spanish and give one tip.
+
+Text:
+"""${t}"""`, {cache:false, onText:({text})=>{ out.textContent=text; }});
+      out.textContent=text; addXP(10);
+    }catch(e){ out.textContent = e.text || errCopy(e.code); }
+    finally{ btn.disabled=false; }
+  };
+}
+
+function openChat(app, sample){
+  const s=chat.scenario;
+  app.innerHTML=`<button class="back">‹ Tutor</button><div class="row between"><h2>${esc(s.name)}</h2><button class="btn ghost" id="endc">Terminar</button></div>
+    <div class="chat" id="chat"></div>
+    <div class="composer"><input class="field" id="msg" placeholder="Type in English…" autocomplete="off"><button class="btn" id="send">Enviar</button></div>`;
+  const box=$("#chat");
+  const paint=()=>{
+    box.innerHTML=chat.items.map(m=>{
+      if(m.role==="fix") return `<div class="fix"><b>Mejor así: ${esc(m.corrected)}</b>${esc(m.why)}</div>`;
+      return `<div class="msg ${m.role==="user"?"me":"bot"}">${esc(m.content)}${m.role!=="user"&&m.content&&m.content!=="…"?` <button class="btn ghost" style="padding:0 4px;min-height:0" data-say="${esc(m.content)}" aria-label="Escuchar">▶</button>`:""}</div>`;
+    }).join("");
+    box.querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say));
+    window.scrollTo(0, document.body.scrollHeight);
+  };
+  paint();
+  app.querySelector(".back").onclick=()=>go("tutor");
+  $("#endc").onclick=()=>{ chat=null; go("tutor"); };
+  const inp=$("#msg"), send=$("#send");
+  const submit=async()=>{
+    const t=inp.value.trim(); if(!t||send.disabled) return;
+    inp.value=""; send.disabled=true;
+    chat.items.push({role:"user",content:t});
+    const pending={role:"assistant",content:"…"}; chat.items.push(pending); paint();
+    const transcript=chat.items.filter(m=>m.role!=="fix"&&m!==pending).map(m=>(m.role==="user"?"Learner: ":"You: ")+m.content).join("\n");
+    try{
+      const r=await sample.json(`You are role-playing as ${s.role}. The learner is a Spanish speaker at B1-B2 (intermediate) English level.
+Conversation so far:
+${transcript}
+
+Respond with ONLY a JSON object, no other text:
+{"reply": "your next line in the role-play, in natural English, 1-3 sentences, ending with a question or prompt that keeps the conversation going",
+ "has_error": true or false (whether the learner's LAST message has a grammar, vocabulary or naturalness mistake worth correcting; ignore capitalization and missing final punctuation),
+ "corrected": "the learner's last message rewritten correctly and naturally (empty string if no error)",
+ "why": "a very short explanation IN SPANISH of the main mistake (empty string if no error)"}`, {cache:false, modelTier:"quick"});
+      chat.items.pop();
+      if(r.has_error && r.corrected) chat.items.push({role:"fix", corrected:r.corrected, why:r.why||""});
+      chat.items.push({role:"assistant", content:r.reply||"Sorry, could you say that again?"});
+      addXP(5);
+    }catch(e){ chat.items.pop(); toast(errCopy(e.code)); chat.items.pop(); inp.value=t; }
+    send.disabled=false; paint(); inp.focus();
+  };
+  send.onclick=submit; inp.onkeydown=e=>{ if(e.key==="Enter") submit(); };
+  inp.focus();
+}
+
+/* ---------------- Inicio ---------------- */
+buildTabs();
+go("hoy");
+</script>
+</body>
+</html>
